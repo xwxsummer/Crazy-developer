@@ -19,7 +19,7 @@
 			background-color: blue;
 		}
 	</style>
-	<script src="./node_modules/bluebird/js/borwser/bluebird.js"></script>
+	<script src="./node_modules/bluebird/js/browser/bluebird.js"></script>
 </head>
 <body>
 	<div class="box box1" style="margin-left: 0"></div>
@@ -29,23 +29,23 @@
 		var box1 = document.querySelector(".box1");
 		var box2 = document.querySelector(".box2");
 		var box3 = document.querySelector(".box3");
-		function animate(box,distance,callback) {
-			setTimeout(function() {
-				var marginLeft = parseInt(box.style.marginLeft,10);//基数是10
-				if(marginLeft == distance){
-					callback && callback();//相当于if(callback){ callback();}
-				}
-				else {
-					if(marginLeft<distance) {
-						marginLeft++;
-					}else {
-						marginLeft--;
-					}
-					box.style.marginLeft=marginLeft+'px';
-					animate(box,distance,callback);
-				}
-			},13)//1s=1000ms 1s=60帧
-		}
+		// function animate(box,distance,callback) {
+		// 	setTimeout(function() {
+		// 		var marginLeft = parseInt(box.style.marginLeft,10);//基数是10
+		// 		if(marginLeft == distance){
+		// 			callback && callback();//相当于if(callback){ callback();}
+		// 		}
+		// 		else {
+		// 			if(marginLeft<distance) {
+		// 				marginLeft++;
+		// 			}else {
+		// 				marginLeft--;
+		// 			}
+		// 			box.style.marginLeft=marginLeft+'px';
+		// 			animate(box,distance,callback);
+		// 		}
+		// 	},13)//1s=1000ms 1s=60帧
+		// }
 		// animate(box1,100,function() {
 		// 	animate(box2,200,function() {
 		// 		animate(box3,300,function() {
@@ -58,27 +58,27 @@
 		// 		})
 		// 	})
 		// })
-		var Promise = window.Promise;//通过引入的bluebird.js提供的方法。
+		var Promise = window.Promise//通过引入的bluebird.js提供的方法。
 		function promiseAnimate(box,distance) {
 			return new Promise(function(resolve,reject) {
 				function _animate() {
 					setTimeout(function() {
 						var marginLeft = parseInt(box.style.marginLeft,10);//基数是10
-						if(marginLeft == distance){
-							resolve;
+						if(marginLeft === distance){
+							resolve()
 						}
 						else {
 							if(marginLeft<distance) {
-								marginLeft++;
+								marginLeft++
 							}else {
-								marginLeft--;
+								marginLeft--
 							}
-						box.style.marginLeft=marginLeft+'px';
-						_animate();
+						box.style.marginLeft=marginLeft+'px'
+						_animate()
 						}
 					},13)
 				}
-				_animate();
+				_animate()
 			})
 		}
 		promiseAnimate(box1,100)
@@ -95,7 +95,7 @@
 				return promiseAnimate(box2,150)
 			})
 			.then(function() {
-				return promiseAnimate(box1,1500)
+				return promiseAnimate(box1,150)
 			})
 	</script>
 </body>
