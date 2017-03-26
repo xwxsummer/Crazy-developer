@@ -3,3 +3,4 @@ javascript案例汇总
 
 - [使用promise解决回调地狱问题](./promise.html)
 
+- [原生js无缝轮播]
