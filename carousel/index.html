@@ -5,18 +5,55 @@
 	<title>js无缝轮播</title>
 	<style type="text/css">
 		*{padding: 0;margin: 0}
-		#div{width:900px;height: 150px;margin: 100px auto;
-			position: relative;background-color: red}
-		#div ul{position: absolute;left: 0;top: 0}
-		#div ul li {float: left;width: 200px;height: 120px;list-style: none;}
-		img{width:200px;height: 120px}
+		#div1{width:712px;height: 108px;margin: 100px auto;
+			position: relative;background-color: red;overflow: hidden;}
+		#div1 ul{position: absolute;left: 0;top: 0;}
+		#div1 ul li{list-style: none;width:178px;height: 108px;float: left;}
+		#div1 ul li img{width:178px;height: 108px;}
+		a{height: 108px;line-height: 108px;text-align: center}
+		a img{width:40px;height: 40px;}	
+		a:nth-child(1){position: absolute;left: 50px;z-index: 2;}
+		a:nth-child(2){position: absolute;right: 50px;z-index: 2;}
 	</style>
 	<script type="text/javascript">
-		
+		window.onload = function() {
+			var oDiv = document.getElementById("div1");
+			var oUl = oDiv.getElementsByTagName("ul")[0];
+			var aLi = oUl.getElementsByTagName("li");
+			var speed = 2;
+			oUl.innerHTML = oUl.innerHTML+oUl.innerHTML;
+			oUl.style.width = aLi[0].offsetWidth*aLi.length+"px";
+			function move(){
+				if(oUl.offsetLeft<-oUl.offsetWidth/2){
+					oUl.style.left = "0";
+				}
+				if(oUl.offsetLeft>0){
+					oUl.style.left = -oUl.offsetWidth/2+"px";
+				}
+				oUl.style.left = oUl.offsetLeft-speed+"px";
+			}
+			var timer = setInterval(move,30);
+			oDiv.onmouseover = function() {
+				clearInterval(timer);
+			}
+			oDiv.onmouseout = function(){
+				timer = setInterval(move,30);
+			}
+			document.getElementsByTagName("a")[0].onclick = function() {
+				speed = 2;
+			}
+			document.getElementsByTagName("a")[1].onclick = function() {
+				speed = -2;
+			}
+		}
+
 	</script>
 </head>
 <body>
+	<a href="javascript:;"><img src="./image/1.png" alt=""></a>
+	<a href="javascript:;"><img src="./image/2.gif" alt=""></a>
 	<div id="div1">
+		
 		<ul>
 			<li><img src="./image/1.jpg" /></li>
 			<li><img src="./image/2.jpg" /></li>
